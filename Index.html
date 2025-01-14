@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Translator</title>
+</head>
+<body>
+  <h1>Voice Translator</h1>
+  <input type="file" id="audioFile" accept="audio/*">
+  <button onclick="sendAudio()">Translate</button>
+  <p>Translated Text: <span id="translatedText"></span></p>
+  <audio id="audioPlayer" controls></audio>
+
+  <script>
+    function sendAudio() {
+      const audioFile = document.getElementById('audioFile').files[0];
+      if (!audioFile) {
+        alert('Please select an audio file.');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('audio', audioFile);
+      formData.append('targetLanguage', 'es');  // Set the target language (e.g., Spanish)
+
+      fetch('http://localhost:3000/translate', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('translatedText').textContent = data.translatedText;
+
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioBlob = new Blob([data.audioFile], { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        audioPlayer.src = audioUrl;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
