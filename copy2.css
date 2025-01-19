@@ -1,0 +1,152 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Body Styling */
+  body {
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    color: #333;
+  }
+  
+  /* Page Title */
+  h1 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-align: center;
+    color: #fff;
+  }
+  
+  /* Section Styling */
+  section {
+    background-color: #fff;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    width: 100%;
+  }
+  
+  /* Voice Transcriber and Translator Layout */
+  section:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-right: 20px;
+  }
+  
+  textarea {
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+    resize: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  button {
+    background: #74ebd5;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button:hover {
+    background: #9face6;
+  }
+  
+  button:disabled {
+    background: #ddd;
+    color: #888;
+    cursor: not-allowed;
+  }
+  
+  /* Translator Section */
+  .Container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .Trans_property {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .item {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .item select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .write_box, .property_trans {
+    position: relative;
+    width: 100%;
+  }
+  
+  textarea.fromText, textarea.toTranslate {
+    min-height: 120px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+    width: calc(100% - 20px);
+    margin: 0 10px;
+  }
+  
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 10px;
+  }
+  
+  .icons span {
+    cursor: pointer;
+    color: #74ebd5;
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  
+  .icons span:hover {
+    color: #9face6;
+  }
+  
+  /* Media Queries for Responsiveness */
+  @media screen and (max-width: 768px) {
+    .Container {
+      flex-direction: column;
+    }
+    
+    .Trans_property {
+      flex-direction: column;
+    }
+  }
+  

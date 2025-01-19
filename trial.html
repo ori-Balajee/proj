@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Transcriber</title>
+    <script src="https://cdn.jsdelivr.net/gh/mbrookes/speechrecognition.js/speechrecognition.js"></script>
+</head>
+<body>
+
+    <h1>Voice Transcriber</h1>
+    <p><strong>Transcribed Text:</strong></p>
+    <textarea id="transcription" rows="10" cols="50" readonly></textarea><br><br>
+    <button id="startBtn">Start Transcription</button>
+    <button id="stopBtn" disabled>Stop Transcription</button>
+
+    <script>
+        // Check for browser support and use appropriate SpeechRecognition object
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        
+        if (!SpeechRecognition) {
+            alert("Speech Recognition is not supported in your browser. Please try Chrome or another supported browser.");
+        }
+
+        // Initialize SpeechRecognition object
+        const recognition = new SpeechRecognition();
+
+        // HTML elements
+        const transcriptionField = document.getElementById('transcription');
+        const startButton = document.getElementById('startBtn');
+        const stopButton = document.getElementById('stopBtn');
+
+        // Set recognition parameters
+        recognition.continuous = true;  // Allow continuous speech recognition
+        recognition.interimResults = true;  // Display partial results during speech
+        recognition.lang = 'en-US';  // Language for recognition
+
+        // Function to start transcription
+        function startTranscription() {
+            transcriptionField.value = ''; // Clear any previous text
+
+            // Ensure permissions for microphone
+            navigator.mediaDevices.getUserMedia({ audio: true })
+                .then(function(stream) {
+                    recognition.start();  // Start recognition only after microphone permission is granted
+                    startButton.disabled = true;  // Disable start button once recording starts
+                    stopButton.disabled = false;  // Enable stop button
+                    console.log('Starting transcription...');
+                })
+                .catch(function(error) {
+                    alert("Microphone permission denied. Please enable microphone access.");
+                    console.log('Error accessing microphone: ', error);
+                });
+        }
+
+        // Function to stop transcription
+        function stopTranscription() {
+            recognition.stop();
+            startButton.disabled = false; // Enable start button once recording stops
+            stopButton.disabled = true; // Disable stop button
+            console.log('Transcription stopped.');
+        }
+
+        // When speech is recognized, add it to the transcription area
+        recognition.onresult = function(event) {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            transcriptionField.value = transcript;
+        };
+
+        // Handle errors during speech recognition
+        recognition.onerror = function(event) {
+            console.log('Error occurred during speech recognition:', event.error);
+            alert('Error occurred during speech recognition: ' + event.error);
+        };
+
+        // Event listeners for buttons
+        startButton.addEventListener('click', startTranscription);
+        stopButton.addEventListener('click', stopTranscription);
+    </script>
+
+</body>
+</html>
